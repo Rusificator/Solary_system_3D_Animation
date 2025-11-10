@@ -1,0 +1,667 @@
+/* style.css */
+:root {
+    /* Mobile-first переменные */
+    --sun-size-mobile: 40px;
+    --planet-size-mobile: 6px;
+    --orbit-size-multiplier: 1.2;
+    --animation-duration-multiplier: 1;
+    
+    /* Цвета */
+    --space-bg: #000;
+    --text-color: #fff;
+    --card-bg: rgba(0, 0, 0, 0.95);
+    --card-border: rgba(255, 255, 255, 0.2);
+    --header-bg: linear-gradient(135deg, #0b3d91 0%, #1a1a2e 100%);
+    --cta-bg: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+}
+
+/* Базовые сбросы и настройки */
+* {
+    box-sizing: border-box;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    background: var(--space-bg);
+    color: var(--text-color);
+}
+
+/* Стили для шапки сайта */
+.site-header {
+    height: 100vh;
+    background: var(--header-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.site-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="30" r="1" fill="white" opacity="0.7"/><circle cx="80" cy="20" r="0.5" fill="white" opacity="0.5"/><circle cx="40" cy="70" r="0.8" fill="white" opacity="0.6"/><circle cx="70" cy="80" r="1.2" fill="white" opacity="0.8"/><circle cx="10" cy="50" r="0.6" fill="white" opacity="0.4"/></svg>') repeat;
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.7; }
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.logo-icon {
+    font-size: 3rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.site-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin: 0;
+    background: linear-gradient(45deg, #4ECDC4, #FF6B6B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.site-subtitle {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    margin: 0 0 40px 0;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+.cta-button {
+    background: var(--cta-bg);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 15px 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+.button-icon {
+    font-size: 1.5rem;
+}
+
+/* Полноэкранный режим */
+.fullscreen-mode {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--space-bg);
+    z-index: 1000;
+}
+
+.fullscreen-mode:not(.hidden) {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Управление в полноэкранном режиме */
+.fullscreen-controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1001;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.exit-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+}
+
+.zoom-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.control-btn:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Контейнер солнечной системы */
+.solar-system-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.solar-system {
+    position: relative;
+    width: 95vmin;
+    height: 95vmin;
+    transition: transform 0.3s ease;
+}
+
+/* Солнце */
+.sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--sun-size-mobile);
+    height: var(--sun-size-mobile);
+    background: radial-gradient(circle at 30% 30%, #FFD700, #FF8C00);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 30px #FF4500;
+    z-index: 10;
+    cursor: pointer;
+    animation: pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 30px #FF4500; }
+    100% { box-shadow: 0 0 50px #FF4500, 0 0 70px #FF8C00; }
+}
+
+/* Орбиты */
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+}
+
+.orbit-mercury {
+    width: calc(var(--sun-size-mobile) * 3);
+    height: calc(var(--sun-size-mobile) * 3);
+    animation: orbit calc(5s * var(--animation-duration-multiplier)) linear infinite;
+}
+
+.orbit-venus {
+    width: calc(var(--sun-size-mobile) * 4);
+    height: calc(var(--sun-size-mobile) * 4);
+    animation: orbit calc(10s * var(--animation-duration-multiplier)) linear infinite;
+}
+
+.orbit-earth {
+    width: calc(var(--sun-size-mobile) * 5);
+    height: calc(var(--sun-size-mobile) * 5);
+    animation: orbit calc(15s * var(--animation-duration-multiplier)) linear infinite;
+}
+
+.orbit-mars {
+    width: calc(var(--sun-size-mobile) * 6);
+    height: calc(var(--sun-size-mobile) * 6);
+    animation: orbit calc(20s * var(--animation-duration-multiplier)) linear infinite;
+}
+
+.orbit-jupiter {
+    width: calc(var(--sun-size-mobile) * 8);
+    height: calc(var(--sun-size-mobile) * 8);
+    animation: orbit calc(30s * var(--animation-duration-multiplier)) linear infinite;
+}
+
+.orbit-saturn {
+    width: calc(var(--sun-size-mobile) * 10);
+    height: calc(var(--sun-size-mobile) * 10);
+    animation: orbit calc(40s * var(--animation-duration-multiplier)) linear infinite;
+}
+
+.orbit-uranus {
+    width: calc(var(--sun-size-mobile) * 11);
+    height: calc(var(--sun-size-mobile) * 11);
+    animation: orbit calc(50s * var(--animation-duration-multiplier)) linear infinite;
+}
+
+.orbit-neptune {
+    width: calc(var(--sun-size-mobile) * 12);
+    height: calc(var(--sun-size-mobile) * 12);
+    animation: orbit calc(60s * var(--animation-duration-multiplier)) linear infinite;
+}
+
+/* Планеты */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease;
+    will-change: transform;
+    cursor: pointer;
+}
+
+.mercury {
+    width: var(--planet-size-mobile);
+    height: var(--planet-size-mobile);
+    background: #A9A9A9;
+}
+
+.venus {
+    width: calc(var(--planet-size-mobile) * 1.5);
+    height: calc(var(--planet-size-mobile) * 1.5);
+    background: #E6E6FA;
+}
+
+.earth {
+    width: calc(var(--planet-size-mobile) * 1.8);
+    height: calc(var(--planet-size-mobile) * 1.8);
+    background: #6D93C1;
+}
+
+.mars {
+    width: calc(var(--planet-size-mobile) * 1.6);
+    height: calc(var(--planet-size-mobile) * 1.6);
+    background: #CD5C5C;
+}
+
+.jupiter {
+    width: calc(var(--planet-size-mobile) * 3);
+    height: calc(var(--planet-size-mobile) * 3);
+    background: #DAA520;
+}
+
+.saturn {
+    width: calc(var(--planet-size-mobile) * 2.8);
+    height: calc(var(--planet-size-mobile) * 2.8);
+    background: #F0E68C;
+}
+
+.uranus {
+    width: calc(var(--planet-size-mobile) * 2.2);
+    height: calc(var(--planet-size-mobile) * 2.2);
+    background: #AFEEEE;
+}
+
+.neptune {
+    width: calc(var(--planet-size-mobile) * 2.2);
+    height: calc(var(--planet-size-mobile) * 2.2);
+    background: #1E90FF;
+}
+
+/* Увеличенная область клика */
+.planet-touch-target {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Названия небесных тел */
+.celestial-name {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    margin-top: 5px;
+}
+
+.planet:hover .celestial-name,
+.sun:hover .celestial-name {
+    opacity: 1;
+}
+
+/* Карточка с информацией */
+.planet-card {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    z-index: 1002;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    width: 100vw;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    
+    /* Поддержка безопасных зон */
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+}
+
+.planet-card.active {
+    transform: translateY(0);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    color: #fff;
+    flex: 1;
+    min-width: 200px;
+}
+
+.close-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+}
+
+.close-btn:active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.card-content {
+    max-height: 50vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.card-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.card-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.card-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+
+.card-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-content li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    line-height: 1.4;
+}
+
+.card-content li:last-child {
+    border-bottom: none;
+}
+
+.card-swipe-indicator {
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    margin: 0 auto 15px;
+    transition: opacity 0.3s ease;
+}
+
+.touch-device .card-swipe-indicator {
+    opacity: 1;
+}
+
+.pointer-device .card-swipe-indicator {
+    opacity: 0.3;
+}
+
+/* Анимации */
+@keyframes orbit {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Адаптация для планшетов */
+@media (min-width: 768px) {
+    :root {
+        --sun-size-mobile: 60px;
+        --planet-size-mobile: 10px;
+    }
+    
+    .solar-system {
+        width: 90vmin;
+        height: 90vmin;
+    }
+    
+    .planet-card {
+        width: 90vw;
+        max-width: 500px;
+        left: 50%;
+        transform: translate(-50%, 100%);
+        border-radius: 20px;
+        bottom: 20px;
+    }
+    
+    .planet-card.active {
+        transform: translate(-50%, 0);
+    }
+    
+    .card-content {
+        max-height: 60vh;
+    }
+    
+    .celestial-name {
+        font-size: 0.8rem;
+    }
+}
+
+/* Адаптация для десктопов */
+@media (min-width: 1024px) {
+    :root {
+        --sun-size-mobile: 80px;
+        --planet-size-mobile: 14px;
+        --orbit-size-multiplier: 1.5;
+    }
+    
+    .solar-system {
+        width: 80vmin;
+        height: 80vmin;
+    }
+    
+    .planet-card {
+        position: absolute;
+        top: 50%;
+        right: 30px;
+        bottom: auto;
+        left: auto;
+        transform: translateY(-50%) scale(0.9);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        width: 350px;
+        max-width: none;
+        max-height: 80vh;
+    }
+    
+    .planet-card.active {
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+    
+    .card-content {
+        max-height: 400px;
+    }
+    
+    .celestial-name {
+        font-size: 0.9rem;
+    }
+}
+
+/* Поддержка landscape ориентации */
+@media (max-height: 500px) and (orientation: landscape) {
+    .site-header {
+        padding: 10px;
+    }
+    
+    .logo {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .solar-system {
+        width: 80vmin;
+        height: 80vmin;
+        top: 45%;
+    }
+    
+    .planet-card {
+        max-width: 300px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .card-content {
+        max-height: calc(80vh - 120px);
+    }
+}
+
+/* Улучшения для очень маленьких экранов */
+@media (max-width: 320px) {
+    :root {
+        --sun-size-mobile: 30px;
+        --planet-size-mobile: 5px;
+    }
+    
+    .control-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .exit-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .planet-card {
+        padding: 15px;
+    }
+    
+    .card-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .card-content li {
+        font-size: 0.85rem;
+        padding: 8px 0;
+    }
+}
+
+/* Предотвращение проблем с масштабированием */
+@media (max-width: 480px) {
+    .planet-card {
+        left: 0;
+        right: 0;
+        width: 100vw;
+    }
+}
+
+/* Исправление для iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .planet-card {
+        -webkit-overflow-scrolling: touch;
+    }
+}
