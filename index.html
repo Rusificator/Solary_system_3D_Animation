@@ -1,0 +1,129 @@
+ <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Космическая исследовательская станция</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🚀</div>
+                <h1 class="site-title">Космическая исследовательская станция</h1>
+            </div>
+            <p class="site-subtitle">Исследуйте Солнечную систему в интерактивном 3D-пространстве</p>
+            <button id="enterFullscreen" class="cta-button">
+                <span class="button-icon">🌌</span>
+                Начать исследование
+            </button>
+        </div>
+    </header>
+
+    <!-- Полноэкранный режим с солнечной системой -->
+    <div id="fullscreenMode" class="fullscreen-mode hidden">
+        <!-- Кнопки управления в полноэкранном режиме -->
+        <div class="fullscreen-controls">
+            <button id="exitFullscreen" class="control-btn exit-btn" aria-label="Выйти из полноэкранного режима">
+                ← Назад
+            </button>
+            <div class="zoom-controls">
+                <button id="zoomIn" class="control-btn" aria-label="Увеличить">+</button>
+                <button id="zoomOut" class="control-btn" aria-label="Уменьшить">-</button>
+                <button id="toggleOrbits" class="control-btn" aria-label="Переключить орбиты">🌀</button>
+            </div>
+        </div>
+        
+        <!-- Контейнер солнечной системы -->
+        <div class="solar-system-container">
+            <div class="solar-system">
+                <!-- Солнце -->
+                <div class="sun" id="sun" role="button" aria-label="Солнце" tabindex="0">
+                    <div class="planet-touch-target"></div>
+                    <div class="celestial-name">Солнце</div>
+                </div>
+                
+                <!-- Меркурий -->
+                <div class="orbit orbit-mercury">
+                    <div class="planet mercury" id="mercury" role="button" aria-label="Меркурий" tabindex="0">
+                        <div class="planet-touch-target"></div>
+                        <div class="celestial-name">Меркурий</div>
+                    </div>
+                </div>
+                
+                <!-- Венера -->
+                <div class="orbit orbit-venus">
+                    <div class="planet venus" id="venus" role="button" aria-label="Венера" tabindex="0">
+                        <div class="planet-touch-target"></div>
+                        <div class="celestial-name">Венера</div>
+                    </div>
+                </div>
+                
+                <!-- Земля -->
+                <div class="orbit orbit-earth">
+                    <div class="planet earth" id="earth" role="button" aria-label="Земля" tabindex="0">
+                        <div class="planet-touch-target"></div>
+                        <div class="celestial-name">Земля</div>
+                    </div>
+                </div>
+                
+                <!-- Марс -->
+                <div class="orbit orbit-mars">
+                    <div class="planet mars" id="mars" role="button" aria-label="Марс" tabindex="0">
+                        <div class="planet-touch-target"></div>
+                        <div class="celestial-name">Марс</div>
+                    </div>
+                </div>
+                
+                <!-- Юпитер -->
+                <div class="orbit orbit-jupiter">
+                    <div class="planet jupiter" id="jupiter" role="button" aria-label="Юпитер" tabindex="0">
+                        <div class="planet-touch-target"></div>
+                        <div class="celestial-name">Юпитер</div>
+                    </div>
+                </div>
+                
+                <!-- Сатурн -->
+                <div class="orbit orbit-saturn">
+                    <div class="planet saturn" id="saturn" role="button" aria-label="Сатурн" tabindex="0">
+                        <div class="planet-touch-target"></div>
+                        <div class="celestial-name">Сатурн</div>
+                    </div>
+                </div>
+                
+                <!-- Уран -->
+                <div class="orbit orbit-uranus">
+                    <div class="planet uranus" id="uranus" role="button" aria-label="Уран" tabindex="0">
+                        <div class="planet-touch-target"></div>
+                        <div class="celestial-name">Уран</div>
+                    </div>
+                </div>
+                
+                <!-- Нептун -->
+                <div class="orbit orbit-neptune">
+                    <div class="planet neptune" id="neptune" role="button" aria-label="Нептун" tabindex="0">
+                        <div class="planet-touch-target"></div>
+                        <div class="celestial-name">Нептун</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточка с информацией о планете -->
+        <div id="planetCard" class="planet-card hidden">
+            <div class="card-swipe-indicator"></div>
+            <div class="card-header">
+                <h2 id="cardTitle">Название планеты</h2>
+                <button id="closeCard" class="close-btn" aria-label="Закрыть">×</button>
+            </div>
+            <div class="card-content">
+                <ul id="cardFacts"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
